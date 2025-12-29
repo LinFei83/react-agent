@@ -1,92 +1,92 @@
-# LangGraph ReAct Agent Template
+# LangGraph ReAct 智能体模板
 
 [![CI](https://github.com/langchain-ai/react-agent/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/langchain-ai/react-agent/actions/workflows/unit-tests.yml)
 [![Open in - LangGraph Studio](https://img.shields.io/badge/Open_in-LangGraph_Studio-00324d.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4NS4zMzMiIGhlaWdodD0iODUuMzMzIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTEzIDcuOGMtNi4zIDMuMS03LjEgNi4zLTYuOCAyNS43LjQgMjQuNi4zIDI0LjUgMjUuOSAyNC41QzU3LjUgNTggNTggNTcuNSA1OCAzMi4zIDU4IDcuMyA1Ni43IDYgMzIgNmMtMTIuOCAwLTE2LjEuMy0xOSAxLjhtMzcuNiAxNi42YzIuOCAyLjggMy40IDQuMiAzLjQgNy42cy0uNiA0LjgtMy40IDcuNkw0Ny4yIDQzSDE2LjhsLTMuNC0zLjRjLTQuOC00LjgtNC44LTEwLjQgMC0xNS4ybDMuNC0zLjRoMzAuNHoiLz48cGF0aCBkPSJNMTguOSAyNS42Yy0xLjEgMS4zLTEgMS43LjQgMi41LjkuNiAxLjcgMS44IDEuNyAyLjcgMCAxIC43IDIuOCAxLjYgNC4xIDEuNCAxLjkgMS40IDIuNS4zIDMuMi0xIC42LS42LjkgMS40LjkgMS41IDAgMi43LS41IDIuNy0xIDAtLjYgMS4xLS44IDIuNi0uNGwyLjYuNy0xLjgtMi45Yy01LjktOS4zLTkuNC0xMi4zLTExLjUtOS44TTM5IDI2YzAgMS4xLS45IDIuNS0yIDMuMi0yLjQgMS41LTIuNiAzLjQtLjUgNC4yLjguMyAyIDEuNyAyLjUgMy4xLjYgMS41IDEuNCAyLjMgMiAyIDEuNS0uOSAxLjItMy41LS40LTMuNS0yLjEgMC0yLjgtMi44LS44LTMuMyAxLjYtLjQgMS42LS41IDAtLjYtMS4xLS4xLTEuNS0uNi0xLjItMS42LjctMS43IDMuMy0yLjEgMy41LS41LjEuNS4yIDEuNi4zIDIuMiAwIC43LjkgMS40IDEuOSAxLjYgMi4xLjQgMi4zLTIuMy4yLTMuMi0uOC0uMy0yLTEuNy0yLjUtMy4xLTEuMS0zLTMtMy4zLTMtLjUiLz48L3N2Zz4=)](https://langgraph-studio.vercel.app/templates/open?githubUrl=https://github.com/langchain-ai/react-agent)
 
-This template showcases a [ReAct agent](https://arxiv.org/abs/2210.03629) implemented using [LangGraph](https://github.com/langchain-ai/langgraph), designed for [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio). ReAct agents are uncomplicated, prototypical agents that can be flexibly extended to many tools.
+本模板展示了基于 [LangGraph](https://github.com/langchain-ai/langgraph) 实现的 [ReAct 智能体](https://arxiv.org/abs/2210.03629)，面向 [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio) 使用。ReAct 智能体结构简单，可灵活扩展各类工具。
 
-![Graph view in LangGraph studio UI](./static/studio_ui.png)
+![LangGraph Studio 中的图视图](./static/studio_ui.png)
 
-The core logic, defined in `src/react_agent/graph.py`, demonstrates a flexible ReAct agent that iteratively reasons about user queries and executes actions, showcasing the power of this approach for complex problem-solving tasks.
+核心逻辑位于 `src/react_agent/graph.py`，展示了一个可迭代推理并执行动作的 ReAct 智能体，适合处理复杂问题。
 
-## What it does
+## 功能概览
 
-The ReAct agent:
+ReAct 智能体的流程：
 
-1. Takes a user **query** as input
-2. Reasons about the query and decides on an action
-3. Executes the chosen action using available tools
-4. Observes the result of the action
-5. Repeats steps 2-4 until it can provide a final answer
+1. 接收用户 **query**
+2. 推理并决定要执行的动作
+3. 使用可用工具执行动作
+4. 观察执行结果
+5. 重复 2-4 步直至给出最终答案
 
-By default, it's set up with a basic set of tools, but can be easily extended with custom tools to suit various use cases.
+默认附带基础工具集，可按需扩展自定义工具。
 
-## Getting Started
+## 快速开始
 
-Assuming you have already [installed LangGraph Studio](https://github.com/langchain-ai/langgraph-studio?tab=readme-ov-file#download), to set up:
+假设已完成 [LangGraph Studio 安装](https://github.com/langchain-ai/langgraph-studio?tab=readme-ov-file#download)：
 
-1. Create a `.env` file.
+1. 创建 `.env` 文件。
 
 ```bash
 cp .env.example .env
 ```
 
-2. Define required API keys in your `.env` file.
+2. 在 `.env` 中填入所需的 API Key。
 
-The primary [search tool](./src/react_agent/tools.py) [^1] used is [Tavily](https://tavily.com/). Create an API key [here](https://app.tavily.com/sign-in).
+默认的 [搜索工具](./src/react_agent/tools.py) [^1] 使用 [Tavily](https://tavily.com/)。可在 [此处](https://app.tavily.com/sign-in) 创建密钥。
 
-### Setup Model
+### 模型配置
 
-The defaults values for `model` are shown below:
+默认模型如下：
 
 ```yaml
 model: claude-sonnet-4-5-20250929
 ```
 
-Follow the instructions below to get set up, or pick one of the additional options.
+按需选择其他选项，或直接使用默认设置。
 
 #### Anthropic
 
-To use Anthropic's chat models:
+如需使用 Anthropic 聊天模型：
 
-1. Sign up for an [Anthropic API key](https://console.anthropic.com/) if you haven't already.
-2. Once you have your API key, add it to your `.env` file:
+1. 注册获取 [Anthropic API Key](https://console.anthropic.com/)。
+2. 将密钥写入 `.env`：
 
 ```
 ANTHROPIC_API_KEY=your-api-key
 ```
 #### OpenAI
 
-To use OpenAI's chat models:
+如需使用 OpenAI 聊天模型：
 
-1. Sign up for an [OpenAI API key](https://platform.openai.com/signup).
-2. Once you have your API key, add it to your `.env` file:
+1. 注册获取 [OpenAI API Key](https://platform.openai.com/signup)。
+2. 将密钥写入 `.env`：
 ```
 OPENAI_API_KEY=your-api-key
 ```
 
-3. Customize whatever you'd like in the code.
-4. Open the folder LangGraph Studio!
+3. 根据需要定制代码。
+4. 打开该项目文件夹到 LangGraph Studio 中运行。
 
-## How to customize
+## 如何定制
 
-1. **Add new tools**: Extend the agent's capabilities by adding new tools in [tools.py](./src/react_agent/tools.py). These can be any Python functions that perform specific tasks.
-2. **Select a different model**: We default to Anthropic's Claude 3 Sonnet. You can select a compatible chat model using `provider/model-name` via runtime context. Example: `openai/gpt-4-turbo-preview`.
-3. **Customize the prompt**: We provide a default system prompt in [prompts.py](./src/react_agent/prompts.py). You can easily update this via context in the studio.
+1. **新增工具**：在 [tools.py](./src/react_agent/tools.py) 增加 Python 函数，扩展智能体能力。
+2. **更换模型**：默认使用 Anthropic Claude 3 Sonnet，可在运行时上下文中以 `provider/model-name` 形式指定，如 `openai/gpt-4-turbo-preview`。
+3. **调整提示词**：默认系统提示词见 [prompts.py](./src/react_agent/prompts.py)，可通过上下文轻松修改。
 
-You can also quickly extend this template by:
+你也可以通过以下方式拓展模板：
 
-- Modifying the agent's reasoning process in [graph.py](./src/react_agent/graph.py).
-- Adjusting the ReAct loop or adding additional steps to the agent's decision-making process.
+- 在 [graph.py](./src/react_agent/graph.py) 修改智能体推理流程。
+- 调整 ReAct 循环或为决策过程添加额外步骤。
 
-## Development
+## 开发提示
 
-While iterating on your graph, you can edit past state and rerun your app from past states to debug specific nodes. Local changes will be automatically applied via hot reload. Try adding an interrupt before the agent calls tools, updating the default system message in `src/react_agent/context.py` to take on a persona, or adding additional nodes and edges!
+迭代图时，可回溯并重跑历史状态以调试特定节点，本地更改会通过热更新自动生效。可以尝试在调用工具前添加中断、在 `src/react_agent/context.py` 中更换默认 persona，或增加新的节点和边。
 
-Follow up requests will be appended to the same thread. You can create an entirely new thread, clearing previous history, using the `+` button in the top right.
+后续请求会附加在同一线程中，右上角 `+` 按钮可新建线程并清除历史。
 
-You can find the latest (under construction) docs on [LangGraph](https://github.com/langchain-ai/langgraph) here, including examples and other references. Using those guides can help you pick the right patterns to adapt here for your use case.
+更多 LangGraph（建设中）文档参考 [LangGraph 仓库](https://github.com/langchain-ai/langgraph)，其中包含示例与参考指南，可帮助选择合适的模式。
 
-LangGraph Studio also integrates with [LangSmith](https://smith.langchain.com/) for more in-depth tracing and collaboration with teammates.
+LangGraph Studio 集成了 [LangSmith](https://smith.langchain.com/)，便于更深入的追踪与团队协作。
 
 [^1]: https://python.langchain.com/docs/concepts/#tools

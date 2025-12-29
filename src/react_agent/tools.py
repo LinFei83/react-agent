@@ -1,9 +1,7 @@
-"""This module provides example tools for web scraping and search functionality.
+"""提供网页抓取与搜索的示例工具。
 
-It includes a basic Tavily search function (as an example)
-
-These tools are intended as free examples to get started. For production use,
-consider implementing more robust and specialized tools tailored to your needs.
+内置基础的 Tavily 搜索功能，供快速上手。
+这些工具仅用于示范，生产环境建议实现更健壮、场景化的定制工具。
 """
 
 from typing import Any, Callable, List, Optional, cast
@@ -15,11 +13,9 @@ from react_agent.context import Context
 
 
 async def search(query: str) -> Optional[dict[str, Any]]:
-    """Search for general web results.
+    """执行通用网页搜索。
 
-    This function performs a search using the Tavily search engine, which is designed
-    to provide comprehensive, accurate, and trusted results. It's particularly useful
-    for answering questions about current events.
+    使用 Tavily 搜索引擎，便于获得全面、准确、可信的结果，尤其适合查询时效性问题。
     """
     runtime = get_runtime(Context)
     wrapped = TavilySearch(max_results=runtime.context.max_search_results)

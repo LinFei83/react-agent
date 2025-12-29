@@ -1,4 +1,4 @@
-"""Define the state structures for the agent."""
+"""定义智能体使用的状态结构。"""
 
 from __future__ import annotations
 
@@ -13,48 +13,44 @@ from typing_extensions import Annotated
 
 @dataclass
 class InputState:
-    """Defines the input state for the agent, representing a narrower interface to the outside world.
+    """定义智能体的输入状态，作为对外部世界的收敛接口。
 
-    This class is used to define the initial state and structure of incoming data.
+    用于约束初始状态及传入数据的结构。
     """
 
     messages: Annotated[Sequence[AnyMessage], add_messages] = field(
         default_factory=list
     )
     """
-    Messages tracking the primary execution state of the agent.
+    消息列表记录智能体的主执行状态，通常累积如下模式：
+    1. HumanMessage：用户输入
+    2. 带 .tool_calls 的 AIMessage：智能体选择工具收集信息
+    3. ToolMessage：工具执行后的结果或错误
+    4. 不含 .tool_calls 的 AIMessage：智能体向用户给出非结构化回复
+    5. HumanMessage：用户开启下一轮对话
 
-    Typically accumulates a pattern of:
-    1. HumanMessage - user input
-    2. AIMessage with .tool_calls - agent picking tool(s) to use to collect information
-    3. ToolMessage(s) - the responses (or errors) from the executed tools
-    4. AIMessage without .tool_calls - agent responding in unstructured format to the user
-    5. HumanMessage - user responds with the next conversational turn
+    步骤 2-5 会按需重复。
 
-    Steps 2-5 may repeat as needed.
-
-    The `add_messages` annotation ensures that new messages are merged with existing ones,
-    updating by ID to maintain an "append-only" state unless a message with the same ID is provided.
+    `add_messages` 注解确保新消息会与现有消息按 ID 归并，保持“追加优先”的状态。
     """
 
 
 @dataclass
 class State(InputState):
-    """Represents the complete state of the agent, extending InputState with additional attributes.
+    """代表智能体的完整状态，在输入状态基础上拓展额外属性。
 
-    This class can be used to store any information needed throughout the agent's lifecycle.
+    可用于存储智能体生命周期内的各类信息。
     """
 
     is_last_step: IsLastStep = field(default=False)
     """
-    Indicates whether the current step is the last one before the graph raises an error.
+    指示当前步骤是否已到达图抛出错误前的最后一步。
 
-    This is a 'managed' variable, controlled by the state machine rather than user code.
-    It is set to 'True' when the step count reaches recursion_limit - 1.
+    这是由状态机托管的变量，非用户代码直接控制。
+    当步数达到 recursion_limit - 1 时置为 True。
     """
 
-    # Additional attributes can be added here as needed.
-    # Common examples include:
+    # 可按需在此扩展更多属性，例如：
     # retrieved_documents: List[Document] = field(default_factory=list)
     # extracted_entities: Dict[str, Any] = field(default_factory=dict)
     # api_connections: Dict[str, Any] = field(default_factory=dict)

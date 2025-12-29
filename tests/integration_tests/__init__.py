@@ -1,1 +1,1 @@
-"""Define any integration tests you want in this directory."""
+"""在此目录编写集成测试。"""
